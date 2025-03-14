@@ -16,7 +16,8 @@ import {
   ChevronDown, 
   ChevronUp,
   Bookmark,
-  Download
+  Download,
+  Lock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -105,123 +106,122 @@ const CourseDetails = () => {
   const remainingMinutes = Math.round(totalMinutes % 60);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#f9fcfa]">
       <Navbar />
       
       <main className="flex-grow">
-        {/* Course Header */}
-        <section className="bg-muted/30 pt-24 pb-10">
+        {/* Course Header - GeeksForGeeks style */}
+        <section className="bg-white shadow-sm pt-24 pb-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center mb-6">
-              <Link to="/courses" className="flex items-center text-sm text-foreground/70 hover:text-primary transition-colors">
+            <div className="flex items-center mb-4">
+              <Link to="/courses" className="flex items-center text-sm text-foreground/70 hover:text-green-600 transition-colors">
                 <ArrowLeft className="w-4 h-4 mr-1" />
                 Back to Courses
               </Link>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2">
-                <h1 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in">
+            <div className="grid grid-cols-1 lg:grid-cols-7 gap-8">
+              <div className="lg:col-span-5">
+                <h1 className="text-2xl md:text-3xl font-bold mb-3 text-gray-800">
                   {course.title}
                 </h1>
                 
-                <p className="text-foreground/70 text-lg mb-6 animate-fade-in" style={{ '--delay': '1' } as React.CSSProperties}>
+                <p className="text-gray-600 mb-4">
                   {course.description}
                 </p>
                 
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-6 animate-fade-in" style={{ '--delay': '2' } as React.CSSProperties}>
-                  <div className="flex items-center">
-                    <Award className="w-4 h-4 text-primary mr-1" />
-                    <span className="text-sm">{course.level}</span>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-4">
+                  <div className="flex items-center text-sm text-gray-600">
+                    <Award className="w-4 h-4 text-green-600 mr-1" />
+                    <span>{course.level}</span>
                   </div>
-                  <div className="flex items-center">
-                    <Clock className="w-4 h-4 text-primary mr-1" />
-                    <span className="text-sm">{totalHours}h {remainingMinutes}m total</span>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <Clock className="w-4 h-4 text-green-600 mr-1" />
+                    <span>{totalHours}h {remainingMinutes}m total</span>
                   </div>
-                  <div className="flex items-center">
-                    <Users className="w-4 h-4 text-primary mr-1" />
-                    <span className="text-sm">{course.students.toLocaleString()} students</span>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <Users className="w-4 h-4 text-green-600 mr-1" />
+                    <span>{course.students.toLocaleString()} students</span>
                   </div>
                   <div className="flex items-center">
                     <div className="flex items-center text-amber-500">
                       <Star className="w-4 h-4 fill-current" />
                       <span className="ml-1 text-sm font-medium">{course.rating.toFixed(1)}</span>
                     </div>
-                    <span className="text-sm text-foreground/60 ml-1">
+                    <span className="text-sm text-gray-500 ml-1">
                       ({course.reviewCount.toLocaleString()} reviews)
                     </span>
                   </div>
                 </div>
                 
-                <div className="flex items-center mb-6 animate-fade-in" style={{ '--delay': '3' } as React.CSSProperties}>
+                <div className="flex items-center mb-4">
                   <img 
                     src={course.instructor.image} 
                     alt={course.instructor.name}
                     className="w-10 h-10 rounded-full object-cover mr-3"
                   />
                   <div>
-                    <p className="font-medium">{course.instructor.name}</p>
-                    <p className="text-sm text-foreground/70">{course.instructor.role}</p>
+                    <p className="font-medium text-gray-800">{course.instructor.name}</p>
+                    <p className="text-sm text-gray-600">{course.instructor.role}</p>
                   </div>
                 </div>
               </div>
               
-              <div className="animate-scale-in" style={{ '--delay': '4' } as React.CSSProperties}>
-                <div className="bg-card border border-border rounded-xl shadow-card overflow-hidden sticky top-24">
-                  <div className="aspect-video w-full bg-muted/50 relative group cursor-pointer" onClick={() => setIsVideoPlaying(!isVideoPlaying)}>
+              <div className="lg:col-span-2">
+                <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden sticky top-24">
+                  <div className="aspect-video w-full bg-gray-100 relative group cursor-pointer" onClick={() => setIsVideoPlaying(!isVideoPlaying)}>
                     <img 
                       src={course.image} 
                       alt={course.title}
                       className={`w-full h-full object-cover transition-opacity duration-300 ${isVideoPlaying ? 'opacity-0' : 'opacity-100'}`}
                     />
                     <div className={`absolute inset-0 flex items-center justify-center bg-black/60 transition-opacity duration-300 ${isVideoPlaying ? 'opacity-0' : 'opacity-100 group-hover:bg-black/70'}`}>
-                      <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
+                      <div className="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                         <Play className="w-6 h-6 text-white fill-current ml-1" />
                       </div>
                     </div>
                     {isVideoPlaying && (
                       <div className="absolute inset-0 bg-black flex items-center justify-center">
                         <span className="text-white">Video is playing...</span>
-                        {/* In a real app, you would embed a video player here */}
                       </div>
                     )}
                   </div>
                   
-                  <div className="p-6">
+                  <div className="p-5">
                     <div className="flex items-baseline justify-between mb-4">
                       <div className="flex items-baseline">
-                        <span className="text-3xl font-bold">${course.price}</span>
-                        <span className="ml-2 text-foreground/60 line-through text-sm">${course.originalPrice}</span>
+                        <span className="text-2xl font-bold text-green-600">${course.price}</span>
+                        <span className="ml-2 text-gray-500 line-through text-sm">${course.originalPrice}</span>
                       </div>
-                      <span className="bg-primary/10 text-primary text-xs font-medium px-2 py-1 rounded-full">
+                      <span className="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">
                         75% off
                       </span>
                     </div>
                     
-                    <Button className="w-full mb-3">Enroll Now</Button>
-                    <Button variant="outline" className="w-full flex items-center justify-center">
+                    <Button className="w-full mb-3 bg-green-600 hover:bg-green-700">Enroll Now</Button>
+                    <Button variant="outline" className="w-full flex items-center justify-center border-gray-300 text-gray-700">
                       <Bookmark className="w-4 h-4 mr-2" />
                       Add to Wishlist
                     </Button>
                     
-                    <div className="border-t border-border mt-6 pt-6">
-                      <h3 className="font-semibold mb-3">This course includes:</h3>
+                    <div className="border-t border-gray-200 mt-5 pt-5">
+                      <h3 className="font-semibold mb-3 text-gray-800">This course includes:</h3>
                       <ul className="space-y-2">
                         {course.features.map((feature, index) => (
-                          <li key={index} className="flex text-sm">
-                            <CheckCircle className="w-4 h-4 text-primary mr-2 flex-shrink-0 mt-0.5" />
+                          <li key={index} className="flex text-sm text-gray-600">
+                            <CheckCircle className="w-4 h-4 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
                             <span>{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                     
-                    <div className="border-t border-border mt-6 pt-6 flex justify-between text-sm text-foreground/70">
-                      <button className="flex items-center hover:text-primary transition-colors">
+                    <div className="border-t border-gray-200 mt-5 pt-5 flex justify-between text-sm text-gray-600">
+                      <button className="flex items-center hover:text-green-600 transition-colors">
                         <Share2 className="w-4 h-4 mr-1" />
                         Share
                       </button>
-                      <button className="flex items-center hover:text-primary transition-colors">
+                      <button className="flex items-center hover:text-green-600 transition-colors">
                         <Download className="w-4 h-4 mr-1" />
                         Resources
                       </button>
@@ -233,32 +233,34 @@ const CourseDetails = () => {
           </div>
         </section>
         
-        {/* Course Content */}
-        <section className="py-12">
+        {/* Course Content - GeeksForGeeks style */}
+        <section className="py-8 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2">
-                <h2 className="text-2xl font-bold mb-6">Course Content</h2>
-                
-                <div className="bg-card border border-border rounded-xl overflow-hidden mb-8">
-                  <div className="bg-muted/50 px-6 py-3 flex justify-between items-center">
-                    <div className="text-sm">
+                <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden mb-8">
+                  <div className="border-b border-gray-200 px-6 py-4">
+                    <h2 className="text-xl font-bold text-gray-800">Course Content</h2>
+                  </div>
+                  
+                  <div className="bg-gray-50 px-6 py-3 flex justify-between items-center">
+                    <div className="text-sm text-gray-600">
                       <span className="font-medium">{course.modules.length} modules</span>
                       <span className="mx-2">•</span>
                       <span>{course.modules.reduce((total, module) => total + module.lessons.length, 0)} lessons</span>
                       <span className="mx-2">•</span>
                       <span>{totalHours}h {remainingMinutes}m total</span>
                     </div>
-                    <button className="text-primary text-sm font-medium">Expand All</button>
+                    <button className="text-green-600 text-sm font-medium">Expand All</button>
                   </div>
                   
                   <Accordion type="single" collapsible className="w-full">
                     {course.modules.map((module, moduleIndex) => (
-                      <AccordionItem key={moduleIndex} value={`module-${moduleIndex}`} className="border-b border-border last:border-0">
-                        <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/30">
+                      <AccordionItem key={moduleIndex} value={`module-${moduleIndex}`} className="border-b border-gray-200 last:border-0">
+                        <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-gray-50">
                           <div className="flex flex-col items-start text-left">
-                            <span className="font-semibold">{module.title}</span>
-                            <span className="text-sm text-foreground/70">
+                            <span className="font-semibold text-gray-800">{module.title}</span>
+                            <span className="text-sm text-gray-500">
                               {module.lessons.length} lessons • 
                               {module.lessons.reduce((total, lesson) => {
                                 const [min, sec] = lesson.duration.split(':').map(Number);
@@ -271,29 +273,29 @@ const CourseDetails = () => {
                           {module.lessons.map((lesson, lessonIndex) => (
                             <div 
                               key={lessonIndex} 
-                              className={`px-6 py-3 flex items-center justify-between border-t border-border first:border-0 ${
-                                lesson.isPreview ? 'hover:bg-muted/20 cursor-pointer' : ''
+                              className={`px-6 py-3 flex items-center justify-between border-t border-gray-200 first:border-0 ${
+                                lesson.isPreview ? 'hover:bg-gray-50 cursor-pointer' : ''
                               }`}
                             >
                               <div className="flex items-center">
                                 <div className="mr-3 w-8 h-8 flex-shrink-0">
                                   {lesson.isPreview ? (
-                                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                      <Play className="w-4 h-4 text-primary" />
+                                    <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                                      <Play className="w-4 h-4 text-green-600" />
                                     </div>
                                   ) : (
-                                    <div className="w-8 h-8 rounded-full bg-foreground/10 flex items-center justify-center">
-                                      <Lock className="w-4 h-4 text-foreground/60" />
+                                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                                      <Lock className="w-4 h-4 text-gray-500" />
                                     </div>
                                   )}
                                 </div>
                                 <div>
-                                  <div className="font-medium text-sm">{lesson.title}</div>
-                                  <div className="text-xs text-foreground/60">{lesson.duration}</div>
+                                  <div className="font-medium text-sm text-gray-800">{lesson.title}</div>
+                                  <div className="text-xs text-gray-500">{lesson.duration}</div>
                                 </div>
                               </div>
                               {lesson.isPreview && (
-                                <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">
+                                <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
                                   Preview
                                 </span>
                               )}
@@ -305,9 +307,9 @@ const CourseDetails = () => {
                   </Accordion>
                 </div>
                 
-                {/* About Instructor */}
-                <h2 className="text-2xl font-bold mb-6">About the Instructor</h2>
-                <div className="bg-card border border-border rounded-xl overflow-hidden p-6 mb-8">
+                {/* About Instructor - GeeksForGeeks style */}
+                <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden p-6 mb-8">
+                  <h2 className="text-xl font-bold mb-5 text-gray-800">About the Instructor</h2>
                   <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                     <img 
                       src={course.instructor.image} 
@@ -315,17 +317,17 @@ const CourseDetails = () => {
                       className="w-24 h-24 rounded-full object-cover"
                     />
                     <div>
-                      <h3 className="text-xl font-semibold mb-2">{course.instructor.name}</h3>
-                      <p className="text-foreground/70 mb-3">{course.instructor.role}</p>
+                      <h3 className="text-lg font-semibold mb-2 text-gray-800">{course.instructor.name}</h3>
+                      <p className="text-gray-600 mb-3">{course.instructor.role}</p>
                       
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="flex items-center">
-                          <Book className="w-4 h-4 text-primary mr-1" />
-                          <span className="text-sm">{course.instructor.courses} courses</span>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Book className="w-4 h-4 text-green-600 mr-1" />
+                          <span>{course.instructor.courses} courses</span>
                         </div>
-                        <div className="flex items-center">
-                          <Users className="w-4 h-4 text-primary mr-1" />
-                          <span className="text-sm">{course.instructor.students.toLocaleString()} students</span>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Users className="w-4 h-4 text-green-600 mr-1" />
+                          <span>{course.instructor.students.toLocaleString()} students</span>
                         </div>
                         <div className="flex items-center text-amber-500">
                           <Star className="w-4 h-4 fill-current" />
@@ -333,7 +335,7 @@ const CourseDetails = () => {
                         </div>
                       </div>
                       
-                      <p className="text-foreground/80 text-sm">
+                      <p className="text-gray-600 text-sm">
                         Dr. Miller is a Python expert with over 15 years of industry experience in software development and data science. 
                         He has worked with companies like Google and Microsoft, and is passionate about making complex programming 
                         concepts accessible to beginners. His teaching approach combines theoretical knowledge with practical, 
@@ -343,9 +345,9 @@ const CourseDetails = () => {
                   </div>
                 </div>
                 
-                {/* Reviews Summary */}
-                <h2 className="text-2xl font-bold mb-6">Student Reviews</h2>
-                <div className="bg-card border border-border rounded-xl overflow-hidden p-6">
+                {/* Reviews Summary - GeeksForGeeks style */}
+                <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden p-6">
+                  <h2 className="text-xl font-bold mb-5 text-gray-800">Student Reviews</h2>
                   <div className="flex flex-col md:flex-row items-center gap-8">
                     <div className="text-center">
                       <div className="text-5xl font-bold text-amber-500 mb-2">{course.rating.toFixed(1)}</div>
@@ -354,7 +356,7 @@ const CourseDetails = () => {
                           <Star key={star} className="w-5 h-5 fill-current" />
                         ))}
                       </div>
-                      <p className="text-sm text-foreground/70">Course Rating</p>
+                      <p className="text-sm text-gray-600">Course Rating</p>
                     </div>
                     
                     <div className="flex-grow">
@@ -369,20 +371,63 @@ const CourseDetails = () => {
                               <span>{rating}</span>
                               <Star className="w-3 h-3 text-amber-500 fill-current ml-1" />
                             </div>
-                            <div className="flex-grow h-2 bg-muted/50 rounded-full mx-2">
+                            <div className="flex-grow h-2 bg-gray-200 rounded-full mx-2">
                               <div 
                                 className="h-full bg-amber-500 rounded-full" 
                                 style={{ width: `${percentage}%` }}
                               />
                             </div>
-                            <span className="text-sm text-foreground/70 w-10">{percentage}%</span>
+                            <span className="text-sm text-gray-600 w-10">{percentage}%</span>
                           </div>
                         );
                       })}
                     </div>
                   </div>
                   
-                  <Button className="w-full mt-6">See All Reviews</Button>
+                  <Button className="w-full mt-6 bg-green-600 hover:bg-green-700">See All Reviews</Button>
+                </div>
+              </div>
+              
+              {/* Related courses would go here */}
+              <div className="hidden lg:block">
+                <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden sticky top-24">
+                  <div className="border-b border-gray-200 px-5 py-4">
+                    <h2 className="font-bold text-gray-800">Related Courses</h2>
+                  </div>
+                  <div className="p-5">
+                    <p className="text-gray-600 text-sm mb-4">
+                      Looking for more Python courses? Check out these popular options:
+                    </p>
+                    <ul className="space-y-3">
+                      <li>
+                        <a href="#" className="flex items-start hover:bg-gray-50 p-2 rounded-md -mx-2">
+                          <div className="w-12 h-12 bg-gray-100 rounded flex-shrink-0 mr-3"></div>
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-800 hover:text-green-600">Python Data Structures</h3>
+                            <p className="text-xs text-gray-500">Intermediate • 6 weeks</p>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" className="flex items-start hover:bg-gray-50 p-2 rounded-md -mx-2">
+                          <div className="w-12 h-12 bg-gray-100 rounded flex-shrink-0 mr-3"></div>
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-800 hover:text-green-600">Python for Data Science</h3>
+                            <p className="text-xs text-gray-500">Intermediate • 8 weeks</p>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" className="flex items-start hover:bg-gray-50 p-2 rounded-md -mx-2">
+                          <div className="w-12 h-12 bg-gray-100 rounded flex-shrink-0 mr-3"></div>
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-800 hover:text-green-600">Advanced Python Programming</h3>
+                            <p className="text-xs text-gray-500">Advanced • 10 weeks</p>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
