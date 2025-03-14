@@ -28,7 +28,7 @@ const ArticleCard = ({
   return (
     <Link 
       to={`/blog/${id}`}
-      className="group h-full flex flex-col rounded-xl overflow-hidden bg-card border border-border shadow-card card-hover-effect"
+      className="group h-full flex flex-col rounded-xl overflow-hidden bg-card border border-border shadow-sm hover:shadow-md transition-all duration-300"
     >
       <div className="relative h-48 overflow-hidden">
         <img
