@@ -1,13 +1,23 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X, Book, Lightbulb, MessageSquare, Code } from 'lucide-react';
+import { Search, Menu, X, Book, Lightbulb, MessageSquare, Code, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger 
+} from '@/components/ui/dropdown-menu';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   const navLinks = [
     { name: 'Courses', path: '/courses', icon: <Book className="w-4 h-4 mr-2" /> },
@@ -32,6 +42,10 @@ const Navbar = () => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <header 
@@ -80,8 +94,42 @@ const Navbar = () => {
               />
             </div>
             <div className="flex space-x-2">
-              <Button variant="outline" size="sm" className="rounded-full px-4">Sign In</Button>
-              <Button size="sm" className="rounded-full px-4">Sign Up</Button>
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="rounded-full">
+                      <User className="h-4 w-4 mr-2" />
+                      Account
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>
+                      {user.email}
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile" className="w-full cursor-pointer">Profile</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/dashboard" className="w-full cursor-pointer">Dashboard</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut} className="text-red-500 cursor-pointer">
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Sign out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <>
+                  <Button variant="outline" size="sm" className="rounded-full px-4" asChild>
+                    <Link to="/auth">Sign In</Link>
+                  </Button>
+                  <Button size="sm" className="rounded-full px-4" asChild>
+                    <Link to="/auth?tab=signup">Sign Up</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
 
@@ -127,8 +175,36 @@ const Navbar = () => {
                 />
               </div>
               <div className="flex flex-col space-y-2 pt-2">
-                <Button variant="outline" size="sm" className="w-full">Sign In</Button>
-                <Button size="sm" className="w-full">Sign Up</Button>
+                {user ? (
+                  <>
+                    <div className="px-3 py-2 text-sm font-medium border-b border-border">
+                      Signed in as: {user.email}
+                    </div>
+                    <Link to="/profile" className="py-2 px-3 hover:bg-secondary rounded-md">
+                      Profile
+                    </Link>
+                    <Link to="/dashboard" className="py-2 px-3 hover:bg-secondary rounded-md">
+                      Dashboard
+                    </Link>
+                    <Button 
+                      variant="outline" 
+                      className="justify-start text-red-500 hover:text-red-600 hover:bg-red-50"
+                      onClick={handleSignOut}
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Sign out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="outline" size="sm" asChild className="w-full">
+                      <Link to="/auth">Sign In</Link>
+                    </Button>
+                    <Button size="sm" className="w-full" asChild>
+                      <Link to="/auth?tab=signup">Sign Up</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
